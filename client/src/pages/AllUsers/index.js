@@ -12,7 +12,6 @@ const AllUsers = () => {
     }, [])
 
 
-
     const getUsers = async () => {
         await axios.get('/user')
             .then(res => {
