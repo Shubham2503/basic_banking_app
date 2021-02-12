@@ -1,10 +1,12 @@
 import React from 'react'
-import './App.css';
+import Allusers from './pages/AllUsers'
+
+import styles from './App.module.css';
 
 const App = () => {
   return (
-    <div className="App">
-      <p>hello there!</p>
+    <div className={styles.container}>
+      <Allusers />
     </div>
   );
 }
