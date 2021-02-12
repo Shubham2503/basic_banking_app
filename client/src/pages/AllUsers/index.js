@@ -25,23 +25,29 @@ const AllUsers = () => {
     console.log(users)
     return (
         <div className={styles.container}>
-            <p> all users </p><Table striped bordered hover variant="dark">
+            <Table responsive striped bordered hover variant="dark">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>DOB</th>
+                        <th>Balance</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((ele, index) => {
                         return (
                             <tr>
-                                <td key={index}>{index}</td>
-                                <td key={index}>{ele.uname}</td>
+                                <td key={index}>{index+1}</td>
+                                <td key={index}>{ele.fname}</td>
+                                <td key={index}>{ele.lname}</td>
+                                <td key={index}>{ele.email}</td>
                                 <td key={index}>{ele.address}</td>
-                                <td key={index}>{ele.balence}</td>
+                                <td key={index}>{ele.dob.slice(0,10)}</td>
+                                <td key={index}>{ele.balance}</td>
                             </tr>
                         )
                     })}
