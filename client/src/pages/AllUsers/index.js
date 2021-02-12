@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styles from './index.module.css'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
+import { Link, NavLink } from "react-router-dom"
 
 const AllUsers = () => {
     const [users, setUsers] = useState([])
@@ -19,6 +21,10 @@ const AllUsers = () => {
             }).catch(err => {
                 console.log(err)
             })
+    }
+
+    const handleclick = () => {
+
     }
 
     console.log(users)
@@ -47,6 +53,7 @@ const AllUsers = () => {
                                 <td key={index}>{ele.address}</td>
                                 <td key={index}>{ele.dob.slice(0,10)}</td>
                                 <td key={index}>{ele.balance}</td>
+                                <td key={index}><Link style={{color: "#0CF"}} to={'/user/'+ele._id}>View</Link></td>
                             </tr>
                         )
                     })}
