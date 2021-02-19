@@ -4,15 +4,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: auto;
     background-color: #353535;
     color: #FFF;
     padding: 20px 100px;
     border-radius: 15px;
+    margin: 10px auto;
 }
 
 .wraper {
-    margin: auto
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 p {
