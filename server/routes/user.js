@@ -44,6 +44,9 @@ router.post('/', async (req, res) => {
     }
 })
 
+
+
+
 router.delete('/', async(req, res) => {
     try {
         const user = userModel.findById(req.body.id)

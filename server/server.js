@@ -22,8 +22,10 @@ mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true }, () =>
 
 //Import Routes
 const userRoute = require('./routes/user')
+const userTransactionRoute = require('./routes/transaction')
 //middleware
 app.use('/user', userRoute)
+app.use('/transaction', userTransactionRoute)
 
 
 app.get('/home', (req, res) => {
