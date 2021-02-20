@@ -5,13 +5,19 @@ import styles from './index.module.css'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Modal from 'react-bootstrap/Modal'
+
 
 const User = (props) => {
 
     const [uid, setUid] = useState(null)
     const [data, setData] = useState([])
-    const [mail,setMail] = useState('')
-    const [amount,setAmount] = useState(0)
+    const [mail, setMail] = useState('')
+    const [amount, setAmount] = useState('')
+    const [show, setShow] = useState(false)
+    const [validated, setValidated] = useState(false)
+    const [iserror, setIserror] = useState(false)
+
 
     const getData = async () => {
         const uri = '/user/' + uid
@@ -24,6 +30,35 @@ const User = (props) => {
             })
     }
 
+    const handleClick = async (event) => {
+
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault()
+            setIserror(true)
+            setShow(true)
+            event.stopPropagation()
+        }
+        setValidated(true);
+
+        if (mail !== '' && amount !== '') {
+            await axios.post('/transaction', {
+                id: uid,
+                email: mail,
+                amount: amount
+            })
+                .then((res) => {
+                    console.log("success")
+                    setIserror(false)
+                    setShow(true)
+                })
+                .catch(err => {
+                    setIserror(false)
+                    console.log(err)
+                })
+        }
+    }
+
     useEffect(async () => {
         setUid(props.match.params.uid)
         await getData()
@@ -31,10 +66,6 @@ const User = (props) => {
 
     if (uid == null || data === [])
         return null
-
-    
-        console.log('amount' + amount);
-        console.log('mail' + mail);
 
     return (
         <>
@@ -51,25 +82,39 @@ const User = (props) => {
             </div>
             <div className={styles.container}>
                 <h2>Transaction</h2>
-                <Form className={styles.wraper}>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="3">
-                            Email
-                            </Form.Label>
+                <Form noValidate validated={validated} className={styles.wraper}>
+                    <Form.Group as={Row} controlId="validationCustom01">
+                        <Form.Label column sm="3"> Email </Form.Label>
                         <Col>
-                            <Form.Control type="text" placeholder="Enter email" onChange={(e) => setMail(e.target.value)}/>
+                            <Form.Control type="text" placeholder="Enter email" onChange={(e) => setMail(e.target.value)} required />
+                            <Form.Control.Feedback type="invalid">Enter Valid email</Form.Control.Feedback>
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="3">
-                            Amount
-                            </Form.Label>
+                    <Form.Group as={Row} controlId="validationCustom02">
+                        <Form.Label column sm="3"> Amount </Form.Label>
                         <Col>
-                            <Form.Control type="Number" placeholder="Amount" onChange={(e) => setAmount(e.target.value)}/>
+                            <Form.Control type="Number" placeholder="Amount" min="1" onChange={(e) => setAmount(e.target.value)} required />
+                            <Form.Control.Feedback type="invalid">Enter Valid Amount</Form.Control.Feedback>
                         </Col>
                     </Form.Group>
-                    <Button varient="primary" tyep="submit" >Transfer</Button>
+                    <Button varient="primary" tyep="submit" onClick={handleClick}>Transfer</Button>
                 </Form>
+
+
+                <Modal show={show} onHide={() => setShow(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Transaction</Modal.Title>
+                    </Modal.Header>
+                    {
+                        iserror ? <Modal.Body>Woohoo, payment successfull</Modal.Body> :
+                            <Modal.Body>opsee, something went wrong</Modal.Body>
+                    }
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShow(false)}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </>
     )
