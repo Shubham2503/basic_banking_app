@@ -39,6 +39,7 @@ const User = (props) => {
             setShow(true)
             event.stopPropagation()
         }
+        setIserror(true)
         setValidated(true);
 
         if (mail !== '' && amount !== '') {
@@ -49,11 +50,13 @@ const User = (props) => {
             })
                 .then((res) => {
                     console.log("success")
+                    console.log(res)
                     setIserror(false)
                     setShow(true)
                 })
                 .catch(err => {
-                    setIserror(false)
+                    setIserror(true)
+                    setShow(true)
                     console.log(err)
                 })
         }
@@ -106,7 +109,7 @@ const User = (props) => {
                         <Modal.Title>Transaction</Modal.Title>
                     </Modal.Header>
                     {
-                        iserror ? <Modal.Body>Woohoo, payment successfull</Modal.Body> :
+                        !iserror ? <Modal.Body>Woohoo, payment successfull</Modal.Body> :
                             <Modal.Body>opsee, something went wrong</Modal.Body>
                     }
                     <Modal.Footer>
