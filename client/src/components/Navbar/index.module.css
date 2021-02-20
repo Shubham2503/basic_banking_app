@@ -1,7 +1,7 @@
 .navBrand {
     text-decoration: none;
     font-family: serif;
-    color: var(--headline);
+    color: #FFF;
     font-size: 40px;
 }
 
@@ -9,15 +9,12 @@
     text-decoration: none;
     margin: 0 10px;
     text-decoration: none;
-    color: var(--headline);
+    color: #FFF;
+
 }
 
 .navLink:hover {
     text-decoration: none;
-}
-
-.navBrand:hover {
-    color: var(--headline);
 }
 
 .container {

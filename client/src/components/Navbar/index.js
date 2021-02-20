@@ -17,7 +17,7 @@ const Navbr = () => {
                             <Link className={styles.navLink} to="/allusers">Customers</Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Link className={styles.navLink}to="/transaction" >Transaction</Link>
+                            <Link className={styles.navLink}to="/alltransaction" >Transaction</Link>
                         </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>

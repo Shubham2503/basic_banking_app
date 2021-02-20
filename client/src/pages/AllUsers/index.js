@@ -9,7 +9,6 @@ const AllUsers = () => {
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        console.log('useEffect called')
         getUsers()
     }, [])
 
