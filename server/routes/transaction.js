@@ -1,5 +1,6 @@
 const express = require('express')
 const userModel = require('../models/user')
+const transactionModel = require('../models/transaction')
 const router = express.Router()
 
 
@@ -16,9 +17,20 @@ router.post('/', async (req, res) => {
                     if(doc) {
                         const updateAmountByID = await userModel.updateOne({ _id: uid },{
                                 $inc: { balance: -req.body.amount }
-                            })
+                        })
+
+                        const fromUser = await userModel.findById(uid)
+
+                        const transaction = new transactionModel({
+                            email1: fromUser.email,
+                            email2: req.body.email,
+                            amount: req.body.amount
+                        })
+                        console.log(transaction)
+                        const addTransaction = await transaction.save()
+
                         res.status(200).json({message: "updated"})
-                    }else 
+                    } else 
                     res.status(400).json(err)
                 }
             }
@@ -27,6 +39,20 @@ router.post('/', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+router.get('/', async (req,res) => {
+    try {
+        const transaction = await transactionModel.find()
+        res.status(200).json({
+            count: transaction.length,
+            data: transaction
+        })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+
 
 
 module.exports = router
